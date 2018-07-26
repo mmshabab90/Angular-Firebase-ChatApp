@@ -1,0 +1,23 @@
+@import '../../../styles/variables';
+
+.navbar-brand {
+  color: $flareLogo;
+}
+
+img {
+  border-radius: 50%;
+  margin-right: 0.25em;
+}
+
+a {
+
+  &.active {
+    color: $flareLogo;
+    border-bottom: 3px solid $flareLogo;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &:hover {
+    text-transform: uppercase;
+  }
+}

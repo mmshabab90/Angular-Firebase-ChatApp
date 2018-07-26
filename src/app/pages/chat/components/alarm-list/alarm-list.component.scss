@@ -1,0 +1,11 @@
+@import "../../../../../styles/variables";
+
+.alarm-list {
+  border-width: 2px solid $light-grey;
+  overflow-y: scroll;
+
+  .alarm-list-item {
+    border-bottom: 1px solid $light-grey;
+    padding: 1em;
+  }
+}
