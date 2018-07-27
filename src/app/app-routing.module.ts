@@ -1,3 +1,4 @@
+import { AuthhGuard } from './guards/authh.guard';
 import { AlarmsComponent } from './pages/alarms/alarms.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
@@ -9,8 +10,8 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'chat', component: ChatComponent },
-  { path: 'alarms', component: AlarmsComponent },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthhGuard] },
+  { path: 'alarms', component: AlarmsComponent, canActivate: [AuthhGuard] },
   { path: '**', redirectTo: 'login' },
 ];
 

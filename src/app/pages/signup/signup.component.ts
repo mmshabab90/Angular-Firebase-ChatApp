@@ -1,22 +1,37 @@
+import { Router } from '@angular/router';
 import { AlertService } from './../../services/alert.service';
 import { Alert } from './../../classes/alert';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertType } from '../../enums/alert-type.enum';
+import { LoadingService } from './../../services/loading.service';
+import { AuthService } from './../../services/auth.service';
+import { Subscription } from 'node_modules/rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   public signupForm: FormGroup;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private fb: FormBuilder, private alertService: AlertService) {
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    private authService: AuthService,
+    private loadingService: LoadingService,
+    private router: Router,
+  ) {
     this.createForm();
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   private createForm() {
@@ -30,9 +45,17 @@ export class SignupComponent implements OnInit {
 
   public submit() {
     if (this.signupForm.valid) {
-      // TODO call the auth service
       const {fullName, phoneNumber, email, password} = this.signupForm.value;
-      console.log(`Full Name: ${fullName}, Phone Number: ${phoneNumber}, Email: ${email}, Password: ${password}`);
+
+      // TODO call the auth service
+      this.subscriptions.push(
+        this.authService.signup(fullName, phoneNumber, email, password).subscribe( success => {
+          if (success) {
+          this.router.navigate(['/chat']);
+          }
+          this.loadingService.isLoading.next(false);
+        })
+      );
     } else {
       const failedSignupAlert = new Alert('Please enter valid name, email and password, try again!', AlertType.Danger);
       this.alertService.alerts.next(failedSignupAlert);

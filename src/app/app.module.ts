@@ -17,12 +17,17 @@ import { ChatMessagesComponent } from './pages/chat/components/chat-messages/cha
 import { ChatSessionWindowComponent } from './pages/chat/components/chat-session-window/chat-session-window.component';
 import { MapComponent } from './pages/chat/components/map/map.component';
 
+// Modules
 import { AlertModule } from 'ngx-bootstrap';
 import { LoadingModule} from 'ngx-loading';
 
 // Services
 import { AlertService } from './services/alert.service';
 import { LoadingService } from './services/loading.service';
+import { AuthService } from './services/auth.service';
+
+// Guards
+import { AuthhGuard } from './guards/authh.guard';
 
 @NgModule({
   declarations: [
@@ -50,6 +55,8 @@ import { LoadingService } from './services/loading.service';
   providers: [
     AlertService,
     LoadingService,
+    AuthService,
+    AuthhGuard
   ],
   bootstrap: [AppComponent]
 })
