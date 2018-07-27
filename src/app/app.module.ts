@@ -18,9 +18,11 @@ import { ChatSessionWindowComponent } from './pages/chat/components/chat-session
 import { MapComponent } from './pages/chat/components/map/map.component';
 
 import { AlertModule } from 'ngx-bootstrap';
+import { LoadingModule} from 'ngx-loading';
 
 // Services
 import { AlertService } from './services/alert.service';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
   declarations: [
@@ -43,9 +45,11 @@ import { AlertService } from './services/alert.service';
     ReactiveFormsModule,
     FormsModule,
     AlertModule.forRoot(),
+    LoadingModule,
   ],
   providers: [
     AlertService,
+    LoadingService,
   ],
   bootstrap: [AppComponent]
 })
